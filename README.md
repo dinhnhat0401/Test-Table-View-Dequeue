@@ -42,5 +42,24 @@ class TestTableViewCell: UITableViewCell {
 }
 ```
 
+Note: In this example I used only one section
+
 | Device pixels | Number of rows in a section | Height of a row | Number of times init method is called == number of TableView cell objects that available for dequeue |
+|-|-|-|-|
 | 896px | 1000 | 10.0 | 86 |
+| 896px | 1000 | 20.0 | 43 |
+| 896px | 1000 | 200.0| 20 |
+| 896px | 19 | 200.0 | 19 |
+| 896px | 10 | 200.0 | 10 |
+
+You can realize that if the number of rows is less than 20, UITableView will create that amount of objects
+Or it will create the amount of cell objects to be able to cover 2 times of the screen length:
+
+```
+if numberOfRows < 20 {
+    number of cell created = numberOfRows
+} else {
+    number of cell created = (numberOfRows * height) / screenHeight * 2
+}
+```
+
